@@ -1,0 +1,27 @@
+#!/bin/bash
+
+help() {
+  echo "Usage:"
+  echo "  gvm use"
+}
+
+core() {
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    help
+    exit 0
+  fi
+
+  local current=$(gvm::current)
+
+  export GOHOME=${PLUGIN_GVM_GO_HOME}
+  export GOPATH=${PLUGIN_GVM_GO_PATH}
+  export PATH=$GOHOME/bin:$GOPATH/bin:$PATH
+
+  echo "$current ($(go version))"
+}
+
+run() {
+  core $@
+}
+
+run $@
